@@ -22,39 +22,49 @@ int main()
     while (i < stringLength) {
         if (target)
         {
-            for (size_t j = 0; j < (line[i]-'0'); j++)
+            for (size_t j = 0; j < (line[i] - '0'); j++)
             {
-                res += std::to_string(count);
+                res += std::to_string(count)+' ';
             }
             count++;
         }
         else {
-            for (size_t j = 0; j < (line[i]-'0'); j++)
+            for (size_t j = 0; j < (line[i] - '0'); j++)
             {
-                res += '.';
+                res += ". ";
             }
         }
         target = !target;
         i++;
     }
-
-    int j = res.size()-1;
+    int j = res.size() - 2;
     i = 0;
     count = 0;
     long long int s = 0;
     while (j >= i) {
         if (res[i] != '.') {
-            s += count*(res[i] - '0');
+            std::string num;
+            while (res[i] != ' ' && res[i] != '.') {
+                num += res[i];
+                i++;
+            }
+            i--;
+            s += count * stoi(num);
         }
         else
         {
             while (res[j] == '.') {
+                j-=2;
+            }
+            std::string num;
+            while (res[j] != ' ' && res[j] != '.') {
+                num = res[j] + num;
                 j--;
             }
-            s += count * (res[j] - '0');
+            s += count * stoi(num);
             j--;
         }
-        i++;
+        i+=2;
         count++;
     }
     std::cout << s;
